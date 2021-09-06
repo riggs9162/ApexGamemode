@@ -1,0 +1,83 @@
+local hats = { }
+
+local function CreateHat( pl, model )
+	      SafeRemoveEntity( pl.Hat )
+
+	      local hat
+
+	      hat = ClientsideModel( model, RENDERGROUP_OPAQUE )
+	      hat:SetNoDraw( true )
+
+	      pl.Hat = hat
+	      hat.Owner = pl
+	      table.insert( hats, hat )
+end
+
+local function CleanHats( )
+	      local k, v
+
+	      for k, v in pairs( hats ) do
+              if not v then return end
+	   	      if not IsValid( v ) then
+	   	   	      hats[ k ] = nil
+	   	      elseif not IsValid( v.Owner ) then
+	   	   	      SafeRemoveEntity( v )
+	   	   	      hats[ k ] = nil
+	   	      end
+	      end
+end
+
+local function DrawHats( )
+	      local k, v, pos, ang
+
+	      CleanHats( )
+
+	      for k, v in pairs( player.GetAll( ) ) do
+	   	      if not v:Alive( ) and IsValid( v.Hat ) then
+	   	   	      SafeRemoveEntity( v.Hat )
+	   	   	      v = v:GetRagdollEntity( )
+	   	      end
+
+	   	      if v and not IsValid( v.Hat ) then
+
+            CreateHat( v, "models/partyhat2/partyhat2.mdl" )
+
+	   	      end
+if v and IsValid(v) and v:IsPlayer() and v:Alive() then
+local a = v:LookupAttachment("eyes")
+local pos, ang = v:GetAttachment( a ).Pos,v:GetAttachment( a ).Ang
+if v:Alive() and v:Team()==TEAM_CITIZEN or v:Team()==TEAM_CWU or v:Team()==TEAM_ADMINISTRATOR and v:IsPlayer() then
+
+  pos = pos + (ang:Forward() * -3.8)
+  pos = pos + (ang:Up() * 2.7)
+elseif v:IsCP() then
+  pos = pos + (ang:Forward() * -6)
+  pos = pos + (ang:Up() * 3)
+
+else
+  pos = pos + (ang:Forward() * -1)
+  pos = pos + (ang:Up() * 3)
+
+end
+
+	   	      v.Hat:SetPos( pos )
+	   	      v.Hat:SetAngles( ang )
+
+
+if v == LocalPlayer() then
+
+if GetConVar("hl2rp_thirdperson") and GetConVar("hl2rp_thirdperson"):GetInt()==1 then
+	   	      v.Hat:DrawModel( )
+end
+elseif not v:GetNoDraw()==true then
+	   	      v.Hat:DrawModel( )
+end
+
+	      end
+
+end
+
+end
+
+hook.Add( "PostDrawOpaqueRenderables", "Draw Hats.PostDrawOpaqueRenderables", DrawHats )
+

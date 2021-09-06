@@ -1,0 +1,23 @@
+	local Salary = DarkRP.getPhrase("salary", GAMEMODE.Config.currency, (localplayer:getDarkRPVar("salary") or 0))
+
+	local JobWallet = {
+		DarkRP.getPhrase("job", localplayer:getDarkRPVar("job") or ""), "\n",
+		DarkRP.getPhrase("wallet", GAMEMODE.Config.currency, formatNumber(localplayer:getDarkRPVar("money") or 0))
+	}
+	JobWallet = table.concat(JobWallet)
+
+	local wep = localplayer:GetActiveWeapon()
+
+	if IsValid(wep) and GAMEMODE.Config.weaponhud then
+        local name = wep:GetPrintName();
+		draw.DrawText("Weapon: "..name, "UiBold", RelativeX + 5, RelativeY - HUDHeight - 18, Color(255, 255, 255, 255), 0)
+	end
+
+	draw.DrawText(Salary, "DarkRPHUD2", RelativeX + 5, RelativeY - HUDHeight + 6, ConVars.salary1, 0)
+	draw.DrawText(Salary, "DarkRPHUD2", RelativeX + 4, RelativeY - HUDHeight + 5, ConVars.salary2, 0)
+
+	surface.SetFont("DarkRPHUD2")
+	local w, h = surface.GetTextSize(Salary)
+
+	draw.DrawText(JobWallet, "DarkRPHUD2", RelativeX + 5, RelativeY - HUDHeight + h + 6, ConVars.Job1, 0)
+	draw.DrawText(JobWallet, "DarkRPHUD2", RelativeX + 4, RelativeY - HUDHeight + h + 5, ConVars.Job2, 0)

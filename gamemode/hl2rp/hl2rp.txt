@@ -1,0 +1,15 @@
+"HL2RP"
+{
+    "base"      	"sandbox"
+    "title"  		"HL2RP"
+    "version"   	"1.2"
+    "menusystem"    "1"
+
+    "author_name"   "The guy at the store that buy all the ice cream"
+    "author_email"  ""
+    "author_url"    "Insert Website Here"
+
+    "icon"  ""
+    "info"  ""
+    "hide"  "0"
+}

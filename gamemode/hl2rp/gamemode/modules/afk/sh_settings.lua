@@ -1,0 +1,1 @@
+GM.Config.afkfiretime = 60 * 12

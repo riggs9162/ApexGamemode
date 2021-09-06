@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "sal/gtav/speaker"
+	"$bumpmap" "sal/gtav/speaker_n"
+}
